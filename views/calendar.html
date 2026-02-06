@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lab 4 - Calendar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../resources/css/style.css">
+  </head>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    
+    <a class="navbar-brand" href="#">Cameron's Website</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="../views/home.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../views/hobbies.html">Hobbies</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../views/projects.html">Projects</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../views/calendar.html">Calendar</a>
+        </li>
+        </li>
+      </ul>
+
+      <a class="navbar-brand ms-auto" href="#">
+        <img src="../resources/img/siameseCat.jpg" alt="Cat" width="30" height="24">
+      </a>
+    </div>
+  </div>
+</nav>
+
+  <body>
+    <div class="row">
+        <div class="col-2">
+            <div class="custom-container">
+                <button
+                  class="btn btn-primary mt-3"
+                  data-bs-toggle="modal"
+                  data-bs-target="#event_modal"
+                  onclick="startCreateEvent()"
+                >
+                  Create Event
+                </button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="container-md container-fluid py-4 h-100">
+                <div id="calendar" class="row h-100">
+                    <div class="col-sm m-1 bg-white rounded px-1 px-md-2" id="sunday">
+                        <div class="h6 text-center position-relative py-2 day">Sunday</div>
+                    </div>
+                    <div class="col-sm m-1 bg-white rounded px-1 px-md-2" id="monday">
+                        <div class="h6 text-center position-relative py-2 day">Monday</div>
+                    </div>
+                    <div class="col-sm m-1 bg-white rounded px-1 px-md-2" id="tuesday">
+                        <div class="h6 text-center position-relative py-2 day">Tuesday</div>
+                    </div>
+                    <div class="col-sm m-1 bg-white rounded px-1 px-md-2" id="wednesday">
+                        <div class="h6 text-center position-relative py-2 day">Wednesday</div>
+                    </div>
+                    <div class="col-sm m-1 bg-white rounded px-1 px-md-2" id="thursday">
+                        <div class="h6 text-center position-relative py-2 day">Thursday</div>
+                    </div>
+                    <div class="col-sm m-1 bg-white rounded px-1 px-md-2" id="friday">
+                        <div class="h6 text-center position-relative py-2 day">Friday</div>
+                    </div>
+                    <div class="col-sm m-1 bg-white rounded px-1 px-md-2" id="saturday">
+                        <div class="h6 text-center position-relative py-2 day">Saturday</div>
+                    </div>
+                </div>        
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="event_modal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title">Create Event</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+            <form id="event_form">
+
+              <div class="mb-3">
+                <label class="form-label">Event Name</label>
+                <input type="text" class="form-control" id="event_name" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Category</label>
+                <select class="form-select" id="event_category" required>
+                  <option value="">Select Category</option>
+                  <option value="academic">Academic</option>
+                  <option value="work">Work</option>
+                  <option value="personal">Personal</option>
+                  <option value="fitness">Fitness</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Weekday</label>
+                <select class="form-select" id="event_weekday" required>
+                  <option value="">Select Day</option>
+                  <option value="sunday">Sunday</option>
+                  <option value="monday">Monday</option>
+                  <option value="tuesday">Tuesday</option>
+                  <option value="wednesday">Wednesday</option>
+                  <option value="thursday">Thursday</option>
+                  <option value="friday">Friday</option>
+                  <option value="saturday">Saturday</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Time</label>
+                <input type="time" class="form-control" id="event_time" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Event Modality</label>
+                <select
+                  class="form-select"
+                  id="event_modality"
+                  required
+                  onchange="updateLocationOptions(this.value)"
+                >
+                  <option value="">Select Modality</option>
+                  <option value="in-person">In-Person</option>
+                  <option value="remote">Remote</option>
+                </select>
+              </div>
+
+              <div class="mb-3" id="location_group" style="display:none;">
+                <label class="form-label">Location</label>
+                <input type="text" class="form-control" id="event_location">
+              </div>
+
+              <div class="mb-3" id="remote_url_group" style="display:none;">
+                <label class="form-label">Remote URL</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="event_remote_url"
+                  placeholder="Enter a URL here."
+                  pattern="https?:\/\/(www\.)?[a-zA-Z0-9\-]+\.[a-zA-Z]{2,}.*"
+                >
+              </div>
+
+              <div class="mb-3" id="attendees_group" style="display:none;">
+                <label class="form-label">Attendees</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="event_attendees"
+                  placeholder="Enter names separated by commas"
+                >
+              </div>
+
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button class="btn btn-primary" type="button" onclick="saveEvent()">
+              Save Event
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  <footer class="bg-body-tertiary text-center py-3 mt-auto">
+    <p class="mb-0">Cameron Malinis</p>
+          <li class="nav-item">
+          <a class="nav-link" href="https://www.linkedin.com/in/cameron-malinis/">My LinkedIn</a>
+        </li>
+  </footer>
+  <!-- Hid footer because it doesn't look nice with it enabled. -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../resources/js/script.js"></script>
+  </body>
+</html>
